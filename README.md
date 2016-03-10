@@ -29,7 +29,7 @@ Good to go.
 4) Using the `d3.svg.axis()` method to build super-sexy x and y axes.
 5) Drawing svg elements (circles) to the page based on a set of data.
 
-#### EXTRA BONUS CONTENT:
+#### EXTRA SUPER ADDED BONUS CONTENT!!!:
 The `js/solution.js` file contains a fully-documented version of the script we built in class plus some extra functionality we didn't quite get to. You can see the fully-functional chart here, and find the full code in the project repo.
 
 

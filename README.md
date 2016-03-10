@@ -1,14 +1,14 @@
 
-#### Intro to D3 with a simple Scatterplot!
+### Intro to D3 with a simple Scatterplot!
 
 In this exercise, we'll build an animated scatterplot showing win totals vs team payrolls for every team in Major League Baseball between 2012 and 2015. The data comes from baseball-reference.com.
 
 For the sake of cramming this all into a 1-hour tutorial, we've combined the data into a single CSV file, which can be found here: `data/mlb.csv`.
 
 
-### Starting a simple server
+#### Starting a simple server
 
-In order to serve static files like our javascript files, css stylesheets and CSV data files so our browser can use them to build our page, we're going to start up a local server.
+In order to serve static files like our JavaScript files, CSS stylesheets and CSV data files so our browser can use them to build our page, we're going to start up a local server.
 
 1. Open up a command prompt. 
 

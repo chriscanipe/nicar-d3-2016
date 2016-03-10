@@ -16,3 +16,7 @@
 .dot {
   stroke: #000;
 }
+
+.name {
+	font-size: 11px;
+}

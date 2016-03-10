@@ -28,6 +28,7 @@ var yAxis = d3.svg.axis()
       return "$"+d/1000000+"M";
     });
 
+
 /* This is where we draw our svg canvas. SVG is a markup element, so we just append it to our target div */
 /* In this case, it's called .chart */
 /* We use the margins and transforms to draw a smaller canvas inside of the target div and to center it appropriately */

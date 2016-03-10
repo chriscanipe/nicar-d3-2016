@@ -24,6 +24,8 @@ On a Mac, click `Terminal` under `Applications` > `Utilities`.
 
 Good to go.
 
+---
+
 **Update:**
 #### Things we covered in this session:
 1) Using global `width`, `height` and `margin` variables to define our working space.

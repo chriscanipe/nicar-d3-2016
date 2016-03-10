@@ -1,7 +1,7 @@
 
 ### Intro to D3 with a simple Scatterplot!
 
-Update: See the final chart [here](http://chriscanipe.com/nicar/scatterplot-nicar-2016/).
+**Update:** See the final chart [here](http://chriscanipe.com/nicar/scatterplot-nicar-2016/) with super extra added bonus content (see below).
 
 In this exercise, we'll build an animated scatterplot showing win totals vs team payrolls for every team in Major League Baseball in 2015. The data comes from baseball-reference.com.
 

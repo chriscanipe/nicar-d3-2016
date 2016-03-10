@@ -75,13 +75,14 @@ function chartInit() {
     //Append the x axis to the chart.
   svg.append("g")
       .attr("class", "x axis")
-      .attr("transform", "translate(0," + height + ")")
+      // Translate is an SVG property that helps us move the X axis below the chart.
+      .attr("transform", "translate(0," + height + ")") 
       .call(xAxis)
     .append("text")
       .attr("class", "label")
-      .attr("x", width)
+      .attr("x", width) // width represents the farthest point right on our chart
       .attr("y", -6)
-      .style("text-anchor", "end")
+      .style("text-anchor", "end") // Anchoring the text to the end lets us flow it left from that end point.
       .text("Wins");
 
   //Append the y axis to the chart.
@@ -90,7 +91,7 @@ function chartInit() {
       .call(yAxis)
     .append("text")
       .attr("class", "label")
-      .attr("transform", "rotate(-90)")
+      .attr("transform", "rotate(-90)") // Rotate is another SVG property.
       .attr("y", 6)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
@@ -114,9 +115,26 @@ function chartUpdate(data) {
   //Now we can target a single year of the data.
   var currYearData = nestedData["2015"];
 
+
+
+
+  // This is where the magic happens, where we actually create elements on the page
+  // using our data. Let's break it down.
+  
+  // SELECT 
+  // First we select the elements we're going to create.
+  // That may sound a little weird since these elements don't exist yet,
+  // but just hang with it.
   svg.selectAll(".dot")
+  // JOIN 
+  // Now we join our data to those elements. This creates a one-to-one relationship
+  // between each data point and element that represents it, in this case a dot!
       .data(currYearData)
+  // ENTER 
+  // This is where d3 is amazing. It knows to check the page, and if there are more data points
+  // than elements representing them, it adds them to the page.
     .enter().append("circle")
+      // Here on out, we're just adding properties to the elements we just created.
       .attr("class", "dot")
       .attr("r", 3.5)
       .attr("cx", function(d) { return x(d.W); })

@@ -28,7 +28,8 @@
                 <div class="col-md-12">
 
                     <h1>Winners vs. Spenders in Major League Baseball</h1>
-                    <div class="byline">By <a href="#">Your Name Here, Esq.</a></div>
+                    <p>A simple animated scatterplot created with D3.js. Check out the repo <a href="https://github.com/chriscanipe/nicar-d3-2016">here</a>.</p>
+                    <div class="byline">By <a href="https://twitter.com/ccanipe">Chris Canipe</a> and <a href="https://twitter.com/JonRMcClure">Jon McClure</a></div>
 
                     <div class="meta">
                         Published March 10, 2016
@@ -38,8 +39,24 @@
 
             <section class="row">
 
-            <div class="col-md-12 chart"></div>
+            <!-- **************************** -->
+            <!-- EXTRA SUPER ADDED BONUS LESSON -->
+            <!-- **************************** -->
 
+            <!-- This is a group of buttons for selecting which year's data we want to show.
+            The buttons follow the Bootstrap `btn-group` css conventions -->
+            <div class="btn-group">
+                <button class="btn btn-default" val="2012">2012</button>
+                <button class="btn btn-default" val="2013">2013</button>
+                <button class="btn btn-default" val="2014">2014</button>
+                <button class="btn btn-default active" val="2015">2015</button>
+            </div>
+
+            <!-- **************************** -->
+
+
+            <div class="col-md-12 chart"></div>
+                <!-- This is where we'll draw our svg and chart elements -->
             </section>
 
             <footer>

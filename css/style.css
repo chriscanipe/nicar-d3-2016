@@ -1,5 +1,9 @@
 
 
+.btn-group {
+	margin: 15px;
+}
+
 
 .chart {
   height: 500px;

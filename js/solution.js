@@ -39,6 +39,18 @@ var svg = d3.select(".chart").append("svg")
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+
+
+/* ------------------------------- */
+/* EXTRA SUPER ADDED BONUS LESSON */
+/* ------------------------------- */
+/* We've added two global variables to make our animation work.
+`theData` stores our dataset globally so we can access it throughout,
+and `currYearData` stores the current year, so we can update it with our buttons */
+var theData;
+var currYear = "2015";
+/* ------------------------------- */
+
 /* This is an ajax call to load our csv-formatted data */
 d3.csv("data/mlb.csv", function(error, data) {
 
@@ -50,12 +62,14 @@ d3.csv("data/mlb.csv", function(error, data) {
     d.Pay = +d["Est. Payroll"];
   });
 
+  //Assign data to our global variable so we can access it throughout.
+  theData = data;
+
   /* We want to assign domains to our x and y scales. */
   /* Domains are the lowest and highest possible values in the data set. */
   /* We find these values by checking a nested property from each object in the array using `d3.extent()` */
-  x.domain(d3.extent(data, function(d) { return d.Wins; })).nice();
-  y.domain(d3.extent(data, function(d) { return d.Pay; })).nice();
-
+  x.domain(d3.extent(theData, function(d) { return d.Wins; })).nice();
+  y.domain(d3.extent(theData, function(d) { return d.Pay; })).nice();
 
 
   //Draw the axis for the charts.
@@ -64,7 +78,32 @@ d3.csv("data/mlb.csv", function(error, data) {
   //Draw the datapoints in a separate function.
   //We separate this in case we need to update the data
   //Without redrawing the axis.
-  chartUpdate(data);
+  chartUpdate();
+
+
+
+
+  /* ------------------------------- */
+  /* EXTRA SUPER ADDED BONUS LESSON */
+  /* ------------------------------- */
+  /* This is the button functionality. Whenever we click a button,
+  we'll update the current year and run the chartUpdate() function again */
+
+  d3.selectAll(".btn").on("click", function() {
+
+    //Set the currYear global to be equal to the selected button.
+    currYear = d3.select(this).attr("val");
+
+    //Remove the .active class from all buttons, add it to the one we just clicked.
+    d3.selectAll(".btn").classed("active", false);
+    d3.select(this).classed("active", true);
+
+    //Update the chart!!
+    chartUpdate();
+  });
+
+  /* ------------------------------- */
+
 
 
 
@@ -104,18 +143,18 @@ function chartInit() {
 
 
 
-function chartUpdate(data) {
+function chartUpdate() {
 
   // d3.nest lets us break our data into 4 separate years.
   // We're basically reorganizing 120 rows (30 MLB teams x 4 years)
   // Into 4 arrays of 30 teams, with "Year" as the object key.
   var nestedData = d3.nest()
     .key(function(d) { return d.Year; })
-    .map(data);
+    .map(theData);
 
   //Now we can target a single year of the data.
-  var currYearData = nestedData["2015"];
-
+  //We'll use the current year (2015 is default, but will update when we click the buttons)
+  var currYearData = nestedData[currYear];
 
 
 
@@ -130,27 +169,64 @@ function chartUpdate(data) {
   // JOIN 
   // Now we join our data to those elements. This creates a one-to-one relationship
   // between each data point and element that represents it, in this case a dot!
-      .data(currYearData)
+      
+  /* ------------------------------- */
+  /* EXTRA SUPER ADDED BONUS LESSON */
+  /* ------------------------------- */
+  /* We need to bind each dot to a specific team so they stay the same each upate 
+  This dot should always represent this team when the data updates 
+  If we DON'T DO THIS, the circles will update in the order of the data. The number of dots will stay the same,
+  but they might not update according to their original team name */
+  /* ------------------------------- */
+
+      .data(currYearData, function(d) {
+        return d.Tm;
+      })
+
   // ENTER 
   // This is where d3 is amazing. It knows to check the page, and if there are more data points
   // than elements representing them, it adds them to the page.
     .enter().append("circle")
       // Here on out, we're just adding properties to the elements we just created.
       .attr("class", "dot")
+    
+    /* ------------------------------- */
+    /* EXTRA SUPER ADDED BONUS LESSON */
+    /* ------------------------------- */
+    /* We're separating the enter() from the attribute assignments.
+    Objects are created on enter, but only if they're new. Once they exist,
+    we can update them based on the current year's data */   
+    /* ------------------------------- */
+
+
+    d3.selectAll(".dot")
+      .transition().duration(500)
       .attr("r", 3.5)
       .attr("cx", function(d) { return x(d.Wins); })
       .attr("cy", function(d) { return y(d.Pay); })
-      .style("fill", "#999");
+      .style("fill", function(d) {
+        if (d.Tm === "KCR") {
+          return "blue";
+        } else {
+          return "#999";
+        }
+      });
 
   svg.selectAll(".name")
-      .data(currYearData)
-    .enter().append("text")
-      .attr("class", "name")
-      .attr("x", function(d) { return x(d.Wins) + 5; })
-      .attr("y", function(d) { return y(d.Pay); })
-      .text(function(d) {
+      .data(currYearData, function(d) {
         return d.Tm;
       })
+    .enter().append("text")
+      .attr("class", "name")
+      .text(function(d) {
+          return d.Tm;
+        })
+  
+  d3.selectAll(".name")
+      .transition().duration(500)
+      .attr("x", function(d) { return x(d.Wins) + 5; })
+      .attr("y", function(d) { return y(d.Pay); })
+        
 }
 
 

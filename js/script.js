@@ -20,9 +20,10 @@
 /* This is an ajax call to load our csv-formatted data */
 d3.csv("data/mlb.csv", function(error, data) {
 
+  console.log("Hello, data:");
   console.log(data);
 
-}
+});
 
 
 

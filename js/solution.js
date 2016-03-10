@@ -15,12 +15,13 @@ var y = d3.scale.linear()
     .range([height, 0]);
 
 /* Axis are automated in D3, so you don't have to draw and place numbers and hash marks */
+/* We all the svg.axis() function and pass the scales as arguments. */
 var xAxis = d3.svg.axis()
     .scale(x)
     .orient("bottom");
 
-/* Tick format allows us to control how the tick labels appear */
-/* Handy for things like currencies and percentages */
+/* Tick format allows us to control how the tick labels appear 
+/* Handy for units like currencies and percentages */
 var yAxis = d3.svg.axis()
     .scale(y)
     .orient("left")
@@ -30,7 +31,7 @@ var yAxis = d3.svg.axis()
 
 
 /* This is where we draw our svg canvas. SVG is a markup element, so we just append it to our target div */
-/* In this case, it's called .chart */
+/* In this case, it's a div called .chart */
 /* We use the margins and transforms to draw a smaller canvas inside of the target div and to center it appropriately */
 var svg = d3.select(".chart").append("svg")
     .attr("width", width + margin.left + margin.right)
@@ -45,14 +46,14 @@ d3.csv("data/mlb.csv", function(error, data) {
   /* So we loop through the data and cast our charting values as numbers */
   /* D3 lets us do that with `+` signs. */
   data.forEach(function(d) {
-    d.W = +d["Wins"];
+    d.Wins = +d["Wins"];
     d.Pay = +d["Est. Payroll"];
   });
 
   /* We want to assign domains to our x and y scales. */
   /* Domains are the lowest and highest possible values in the data set. */
   /* We find these values by checking a nested property from each object in the array using `d3.extent()` */
-  x.domain(d3.extent(data, function(d) { return d.W; })).nice();
+  x.domain(d3.extent(data, function(d) { return d.Wins; })).nice();
   y.domain(d3.extent(data, function(d) { return d.Pay; })).nice();
 
 
@@ -137,7 +138,7 @@ function chartUpdate(data) {
       // Here on out, we're just adding properties to the elements we just created.
       .attr("class", "dot")
       .attr("r", 3.5)
-      .attr("cx", function(d) { return x(d.W); })
+      .attr("cx", function(d) { return x(d.Wins); })
       .attr("cy", function(d) { return y(d.Pay); })
       .style("fill", "#999");
 
@@ -145,7 +146,7 @@ function chartUpdate(data) {
       .data(currYearData)
     .enter().append("text")
       .attr("class", "name")
-      .attr("x", function(d) { return x(d.W) + 5; })
+      .attr("x", function(d) { return x(d.Wins) + 5; })
       .attr("y", function(d) { return y(d.Pay); })
       .text(function(d) {
         return d.Tm;

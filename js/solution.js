@@ -56,7 +56,23 @@ d3.csv("data/mlb.csv", function(error, data) {
   y.domain(d3.extent(data, function(d) { return d.Pay; })).nice();
 
 
-  //Append the x axis to the chart.
+
+  //Draw the axis for the charts.
+  chartInit();
+
+  //Draw the datapoints in a separate function.
+  //We separate this in case we need to update the data
+  //Without redrawing the axis.
+  chartUpdate(data);
+
+
+
+});
+
+
+function chartInit() {
+
+    //Append the x axis to the chart.
   svg.append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(0," + height + ")")
@@ -80,15 +96,8 @@ d3.csv("data/mlb.csv", function(error, data) {
       .style("text-anchor", "end")
       .text("Payroll")
 
-
-
-      //Draw the datapoints in a separate function.
-      //We separate this in case we need to update the data
-      //Without redrawing the axis.
-      chartUpdate(data);
-
-
-});
+      
+}
 
 
 
